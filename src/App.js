@@ -1,19 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Lobby from "./pages/Lobby";
+import ErrorPage from "./pages/ErrorPage";
 import MainNavigation from "./components/Navigation/MainNavigation";
+import Page from "./pages/Page";
 
 const App = () => {
   return (
-    <Router>
+    <div>
       <MainNavigation />
-      <main>
-        <Route path="/" exact>
-          <Lobby />
-        </Route>
-      </main>
-    </Router>
+      <Routes>
+        <Route path="/" element={<Lobby />} />
+        <Route path="/page/:assignment" element={<Page />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </div>
   );
 };
 

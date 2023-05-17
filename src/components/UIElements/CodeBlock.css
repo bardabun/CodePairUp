@@ -1,0 +1,30 @@
+.code-block--container{
+  position: relative;
+  width: 50rem; 
+  margin: 0 auto; /* Center horizontally */
+  /* border: 2px solid #333;  */
+  /* border-radius: 10px;  */
+  overflow: auto; /* Enable scrollbar if needed */
+  display: flex;
+  flex-direction: column;
+}
+.code-block--copy{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 15px;
+  top: 20px;
+  font-size: 1.2rem;
+  background: transparent;
+  border: transparent;
+  cursor: pointer;
+  transition: color 0.5s ;
+  
+}
+
+.code-block--copy:hover{
+  color: #eee;
+}
+
+
+

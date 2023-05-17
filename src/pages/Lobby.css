@@ -1,0 +1,24 @@
+.lobby {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.header--option {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 5rem;
+  /* Add any additional styles you want for the h2 element */
+}
+.button--container {
+  display: flex;
+  flex-direction: row;
+}
+
+.button--big {
+  padding: 20px 40px;
+  font-size: 18px;
+  margin: 10px;
+}
