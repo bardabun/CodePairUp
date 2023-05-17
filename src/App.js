@@ -12,7 +12,7 @@ const App = () => {
       <MainNavigation />
       <Routes>
         <Route path="/" element={<Lobby />} />
-        <Route path="/page/:assignment" element={<Page />} />
+        <Route path="/page/:aid" element={<Page />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
