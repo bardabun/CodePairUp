@@ -43,6 +43,7 @@ const CodeBlock = (props) => {
           automaticLayout: true,
           fontSize: 18,
           wordWrap: "on",
+          readOnly: props.isDisabled,
         }}
       />
     </div>

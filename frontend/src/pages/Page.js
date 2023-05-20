@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CodeBlock from "../components/UIElements/CodeBlock";
-import openSocket from "socket.io-client";
+import { io } from "socket.io-client";
 
 import "./page.css";
 
+// Connect to the Socket.IO server
+const socket = io("http://localhost:5000", { autoConnect: false });
+
 const Page = () => {
   const [codeBlock, setCodeBlock] = useState({ id: "", title: "", code: "" });
-  const [isFirstUser, setIsFirstUser] = useState(true);
+  const [role, setRole] = useState(null);
   const [typedCode, setTypedCode] = useState("");
   const [showSmile, setShowSmile] = useState(false);
 
   let params = useParams();
-
-  // Connect to the Socket.IO server
-  const socket = openSocket("http://localhost:5000");
 
   useEffect(() => {
     // Fetch the codeBlock data from the server
@@ -37,30 +37,36 @@ const Page = () => {
   useEffect(() => {
     // Listen for code updates from the server
     socket.on("codeUpdated", (updatedCode) => {
-      !isFirstUser &&
-        setCodeBlock((prevCodeBlock) => ({
-          ...prevCodeBlock,
-          code: updatedCode,
-        }));
+      setCodeBlock((prevCodeBlock) => ({
+        ...prevCodeBlock,
+        code: updatedCode,
+      }));
     });
-    socket.on("userRole", (role) => {
-      setIsFirstUser(role === "viewer");
+
+    socket.on("userRole", (roleFromServer) => {
+      if (role === "viewer" || roleFromServer === "viewer") {
+        setRole("viewer");
+      } else if (roleFromServer === "editor") {
+        setRole("editor");
+      }
     });
+
+    socket.connect();
 
     return () => {
       // Clean up the socket event listener when the component unmounts
       socket.off("codeUpdated");
       socket.off("userRole");
     };
-  }, [isFirstUser, socket]);
+  }, [role]);
 
   const handleCodeChange = (newCode) => {
-    if (!isFirstUser) {
-      console.log(isFirstUser);
+    if (role === "editor") {
+      console.log(role);
       // Emit the code update event to the server
       socket.emit("codeUpdate", newCode);
+      setTypedCode(newCode);
     }
-    setTypedCode(newCode);
   };
 
   const handleCodeSolution = () => {
@@ -81,12 +87,18 @@ const Page = () => {
   return (
     <div>
       <h1 className="header--codeblock"> {codeBlock.title}</h1>
-      <CodeBlock code={codeBlock.code} onChange={handleCodeChange} />
-      <div className="button--submit-container">
-        <button className="button--submit" onClick={handleCodeSolution}>
-          Submit
-        </button>
-      </div>
+      <CodeBlock
+        isDisabled={role === "viewer"}
+        code={codeBlock.code}
+        onChange={handleCodeChange}
+      />
+      {role === "editor" && (
+        <div className="button--submit-container">
+          <button className="button--submit" onClick={handleCodeSolution}>
+            Submit
+          </button>
+        </div>
+      )}
       {showSmile && <div className="smile-overlay">😊</div>}
     </div>
   );

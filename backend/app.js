@@ -57,8 +57,8 @@ mongoose
       console.log("Client Connected");
 
       if (!isFirstUserConnected) {
-        isFirstUserConnected = true; // Mark the first user as connected
         socket.emit("userRole", "viewer"); // Emit "viewer" role to the first user
+        isFirstUserConnected = true; // Mark the first user as connected
       } else {
         socket.emit("userRole", "editor"); // Emit "editor" role to subsequent users
       }
@@ -66,6 +66,7 @@ mongoose
       // Listen for code updates from clients
       socket.on("codeUpdate", (updatedCode) => {
         if (isFirstUserConnected) {
+          console.log(isFirstUserConnected);
           // Only allow the first user (editor) to update the code
           // Broadcast the updated code to all connected clients
           socket.broadcast.emit("codeUpdated", updatedCode);
