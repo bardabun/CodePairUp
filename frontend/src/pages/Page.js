@@ -19,7 +19,8 @@ const Page = () => {
   useEffect(() => {
     // Fetch the codeBlock data from the server
     // fetch("https://bardabun-server.vercel.app/api/product") //const res = await fetch(SERVER_URL + "/api/product");
-    fetch(`http://localhost:5000/api/codeblocks/${params.aid}`)
+    fetch(`https://code-pair-up-client.vercel.app/api/codeblocks/${params.aid}`)
+      // fetch(`http://localhost:5000/api/codeblocks/${params.aid}`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.codeBlock) {
