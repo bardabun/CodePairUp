@@ -10,10 +10,10 @@ const Button = (props) => {
     <button
       className="button--big"
       onClick={() => {
-        navigate(`/page/${props.codeBlockTitle}`);
+        navigate(`/page/${props.codeBlockId}`);
       }}
     >
-      Button {props.codeBlockTitle}
+      {props.title}
     </button>
   );
 };

@@ -1,0 +1,43 @@
+.header--codeblock {
+  font-family: "McLaren", cursive;
+  font-weight: 200;
+  text-align: center;
+  color: #333;
+  margin: 30px;
+}
+
+.button--submit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px 40px;
+}
+
+.button--submit {
+  font-size: 18px;
+  margin: 20px;
+  padding: 20px 40px;
+}
+
+.smile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15rem;
+  color: red;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 3s ease-in-out;
+}
+
+.smile-overlay:hover {
+  opacity: 0;
+}
+
