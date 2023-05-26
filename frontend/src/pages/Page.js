@@ -6,7 +6,17 @@ import { io } from "socket.io-client";
 import "./page.css";
 
 // Connect to the Socket.IO server
-const socket = io("http://localhost:5000", { autoConnect: false });
+// const socket = io("http://localhost:5000", { autoConnect: false });
+let socket;
+if (process.env.NODE_ENV === "production") {
+  // Use the remote server address for production environment
+  socket = io("https://code-pair-up-server.vercel.app/", {
+    autoConnect: false,
+  });
+} else {
+  // Use the local machine address for development environment
+  socket = io("http://localhost:5000", { autoConnect: false });
+}
 
 const Page = () => {
   const [codeBlock, setCodeBlock] = useState({ id: "", title: "", code: "" });
@@ -29,8 +39,8 @@ const Page = () => {
   useEffect(() => {
     // Fetch the codeBlock data from the server
     // fetch("https://bardabun-server.vercel.app/api/product") //const res = await fetch(SERVER_URL + "/api/product");
-    // fetch(`https://code-pair-up-client.vercel.app/api/codeblocks/${params.aid}`)
-    fetch(`http://localhost:5000/api/codeblocks/${params.aid}`)
+    fetch(`https://code-pair-up-client.vercel.app/api/codeblocks/${params.aid}`)
+      // fetch(`http://localhost:5000/api/codeblocks/${params.aid}`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.codeBlock) {
