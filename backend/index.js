@@ -81,7 +81,7 @@ mongoose
         if (isFirstUserConnected) {
           isFirstUserConnected = false; // Reset isFirstUserConnected when the first user disconnects
         }
-        console.log("Client Disconnectedd");
+        console.log("Client Disconnected");
       });
     });
   })
