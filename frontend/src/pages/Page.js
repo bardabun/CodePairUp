@@ -9,13 +9,13 @@ import "./page.css";
 // const socket = io("http://localhost:5000", { autoConnect: false });
 let socket;
 // if (process.env.NODE_ENV === "production") {
-//   // Use the remote server address for production environment
-//   socket = io("https://code-pair-up-server.vercel.app", {
-//     autoConnect: false,
-//   });
+// Use the remote server address for production environment
+socket = io("https://code-pair-up-server.vercel.app", {
+  autoConnect: false,
+});
 // } else {
-// Use the local machine address for development environment
-socket = io("http://localhost:5000", { autoConnect: false });
+//   // Use the local machine address for development environment
+//   socket = io("http://localhost:5000", { autoConnect: false });
 // }
 
 const Page = () => {
