@@ -66,7 +66,6 @@ mongoose
       // Listen for code updates from clients
       socket.on("codeUpdate", (updatedCode) => {
         if (isFirstUserConnected) {
-          console.log(isFirstUserConnected);
           // Only allow the first user (editor) to update the code
           // Broadcast the updated code to all connected clients
           socket.broadcast.emit("codeUpdated", updatedCode);

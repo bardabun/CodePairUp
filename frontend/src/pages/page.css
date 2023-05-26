@@ -5,8 +5,7 @@
   color: #333;
   margin: 30px;
 }
-
-.button--submit-container {
+.buttons--container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,8 +18,9 @@
   margin: 20px;
   padding: 20px 40px;
 }
-
-.smile-overlay {
+.popup-overlay,
+.smile-overlay,
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -29,10 +29,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  
+}
+.popup-overlay {
+  flex-direction: column;
+ }
+
+.smile-overlay {
   font-size: 15rem;
   color: red;
-  background-color: rgba(255, 255, 255, 0.7);
-  z-index: 9999;
   opacity: 1;
   transition: opacity 3s ease-in-out;
 }
@@ -41,3 +48,9 @@
   opacity: 0;
 }
 
+.try-again {
+  display: flex;
+  font-size: 2rem;
+  color: #333;
+  justify-content: center;
+}

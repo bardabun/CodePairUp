@@ -12,7 +12,7 @@
   margin-bottom: 5rem;
   /* Add any additional styles you want for the h2 element */
 }
-.button--container {
+.buttons--container {
   display: flex;
   flex-direction: row;
 }

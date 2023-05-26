@@ -13,14 +13,24 @@ const Page = () => {
   const [role, setRole] = useState(null);
   const [typedCode, setTypedCode] = useState("");
   const [showSmile, setShowSmile] = useState(false);
+  const [showTryAgain, setShowTryAgain] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   let params = useParams();
+
+  const openPopup = () => {
+    setIsOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     // Fetch the codeBlock data from the server
     // fetch("https://bardabun-server.vercel.app/api/product") //const res = await fetch(SERVER_URL + "/api/product");
-    fetch(`https://code-pair-up-client.vercel.app/api/codeblocks/${params.aid}`)
-      // fetch(`http://localhost:5000/api/codeblocks/${params.aid}`)
+    // fetch(`https://code-pair-up-client.vercel.app/api/codeblocks/${params.aid}`)
+    fetch(`http://localhost:5000/api/codeblocks/${params.aid}`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.codeBlock) {
@@ -76,13 +86,17 @@ const Page = () => {
     if (typedCode === solutionCode) {
       // Code matches the solution
       console.log("Code is correct!");
-      setShowSmile(true); // Show the smile
+      setShowSmile(true);
       setTimeout(() => {
         setShowSmile(false); // Hide the smile after a delay
       }, 3000);
     } else {
       // Code does not match the solution
       console.log("Code is incorrect!");
+      setShowTryAgain(true);
+      setTimeout(() => {
+        setShowTryAgain(false); // Hide the try again after a delay
+      }, 3000);
     }
   };
   return (
@@ -93,14 +107,33 @@ const Page = () => {
         code={codeBlock.code}
         onChange={handleCodeChange}
       />
-      {role === "editor" && (
-        <div className="button--submit-container">
+      <div className="buttons--container">
+        {role === "editor" && (
           <button className="button--submit" onClick={handleCodeSolution}>
             Submit
           </button>
-        </div>
+        )}
+        <button className="button--submit" onClick={openPopup}>
+          Solution
+        </button>
+        {/* <Popup isOpen={isOpen} onClose={closePopup} /> */}
+        {isOpen && (
+          <div className="popup-overlay overlay">
+            <CodeBlock
+              isDisabled={true}
+              code={codeBlock.solution}
+              // onChange={handleCodeChange}
+            />
+            <button className="button--submit" onClick={closePopup}>
+              Close
+            </button>
+          </div>
+        )}
+      </div>
+      {showSmile && <div className="smile-overlay overlay">😊</div>}
+      {showTryAgain && (
+        <div className="try-again">Incorrect, try again you can make it!</div>
       )}
-      {showSmile && <div className="smile-overlay">😊</div>}
     </div>
   );
 };
