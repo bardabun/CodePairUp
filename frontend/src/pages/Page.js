@@ -10,7 +10,7 @@ import "./page.css";
 let socket;
 if (process.env.NODE_ENV === "production") {
   // Use the remote server address for production environment
-  socket = io("https://code-pair-up-server.vercel.app/", {
+  socket = io("https://code-pair-up-server.vercel.app", {
     autoConnect: false,
   });
 } else {
