@@ -5,19 +5,28 @@ import { io } from "socket.io-client";
 
 import "./page.css";
 
-// Connect to the Socket.IO server
-let socket;
-if (process.env.NODE_ENV === "production") {
-  // Use the remote server address for production environment
-  console.log(process.env.NODE_ENV + " mode");
-  socket = io("https://code-pair-up-server.vercel.app", {
-    autoConnect: false,
-  });
-} else {
-  // Use the local machine address for development environment
-  console.log("not production mode");
-  socket = io("http://localhost:5000", { autoConnect: false });
-}
+const serverURL =
+  process.env.NODE_ENV === "production"
+    ? "https://code-pair-up-server.vercel.app"
+    : "http://localhost:5000";
+
+// // Connect to the Socket.IO server
+// let socket;
+// if (process.env.NODE_ENV === "production") {
+//   // Use the remote server address for production environment
+//   console.log(process.env.NODE_ENV + " mode");
+//   socket = io("https://code-pair-up-server.vercel.app", {
+//     autoConnect: false,
+//   });
+// } else {
+//   // Use the local machine address for development environment
+//   console.log("not production mode");
+//   socket = io("http://localhost:5000", { autoConnect: false });
+// }
+
+const socket = io(serverURL, {
+  autoConnect: false,
+});
 
 const Page = () => {
   const [codeBlock, setCodeBlock] = useState({ id: "", title: "", code: "" });
@@ -40,7 +49,8 @@ const Page = () => {
   useEffect(() => {
     // Fetch the codeBlock data from the server
     // fetch("https://bardabun-server.vercel.app/api/product") //const res = await fetch(SERVER_URL + "/api/product");
-    fetch(`https://code-pair-up-client.vercel.app/api/codeblocks/${params.aid}`)
+    fetch(`${serverURL}/api/codeblocks/${params.aid}`)
+      // fetch(`https://code-pair-up-client.vercel.app/api/codeblocks/${params.aid}`)
       // fetch(`http://localhost:5000/api/codeblocks/${params.aid}`)
       .then((response) => response.json())
       .then((data) => {
