@@ -6,7 +6,6 @@ import { io } from "socket.io-client";
 import "./page.css";
 
 // Connect to the Socket.IO server
-// const socket = io("http://localhost:5000", { autoConnect: false });
 let socket;
 if (process.env.NODE_ENV === "production") {
   // Use the remote server address for production environment
@@ -128,7 +127,6 @@ const Page = () => {
         <button className="button--submit" onClick={openPopup}>
           Solution
         </button>
-        {/* <Popup isOpen={isOpen} onClose={closePopup} /> */}
         {isOpen && (
           <div className="popup-overlay overlay">
             <CodeBlock

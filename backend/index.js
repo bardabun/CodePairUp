@@ -14,10 +14,6 @@ app.use(cors());
 
 app.use("/api/codeblocks/", codeBlocksRoutes);
 
-// app.listen(PORT, () => {
-//   console.log(`Server listening at http://localhost:${PORT}`);
-// });
-
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
   throw error;
@@ -49,8 +45,8 @@ mongoose
 
     const io = require("socket.io")(server, {
       cors: {
-        // origin: "*", // Allow requests from all origins
-        origin: "https://code-pair-up-client.vercel.app/",
+        origin: "*", // Allow requests from all origins
+        // origin: "https://code-pair-up-client.vercel.app/",
         methods: ["GET", "POST", "PATCH", "DELETE"], // Allow specific HTTP methods
         allowedHeaders: [
           "Origin",
