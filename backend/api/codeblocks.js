@@ -6,7 +6,7 @@ const router = express.Router();
 
 // router.get("/:aid", codeBlocksControllers.getCodeBlockById);
 router.get("/", (req, res) => {
-  console.log("Hey");
+  console.log("Heyy");
 });
 
 module.exports = router;
