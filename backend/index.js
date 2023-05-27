@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const codeBlocksRoutes = require("./routes/codeblockes-routes");
+const codeBlocksRoutes = require("./api/codeblockes");
 const HttpError = require("./models/http-error");
 
 const app = express();
