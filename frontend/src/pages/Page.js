@@ -10,12 +10,13 @@ import "./page.css";
 let socket;
 if (process.env.NODE_ENV === "production") {
   // Use the remote server address for production environment
-  console.log(process.env.NODE_ENV);
+  console.log(process.env.NODE_ENV + " mode");
   socket = io("https://code-pair-up-server.vercel.app", {
     autoConnect: false,
   });
 } else {
   // Use the local machine address for development environment
+  console.log("not production mode");
   socket = io("http://localhost:5000", { autoConnect: false });
 }
 
