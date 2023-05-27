@@ -9,7 +9,7 @@ const Lobby = () => {
       <h1 className="header--option">Choose Code Block</h1>
 
       <div className="buttons--container">
-        <Button codeBlockId={1} title={"Sum Number"} />
+        <Button codeBlockId={1} title={"Sum "} />
         <Button codeBlockId={2} title={"Is Prime Number"} />
         <Button codeBlockId={3} title={"String Reverse"} />
         <Button codeBlockId={4} title={"Count The Vowels"} />
