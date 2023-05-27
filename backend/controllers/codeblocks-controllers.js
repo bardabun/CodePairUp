@@ -40,9 +40,17 @@ const getCodeBlockById = (req, res, next) => {
     })
     .catch((error) => {
       console.log(error);
-      next(
-        new HttpError("Fetching codeBlock failed, please try again later.", 500)
-      );
+      // next(
+      //   new HttpError("Fetching codeBlock failed, please try again later.", 500)
+      // );
+      return res.status(500).json({
+        codeBlock: {
+          id: "0",
+          title: "We have some error",
+          code: "No code bro.. error fetching the codeblock",
+          solution: "bla bla",
+        },
+      });
     });
 };
 
