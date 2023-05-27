@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === "production") {
   // Use the local machine address for development environment
   socket = io("http://localhost:5000", { autoConnect: false });
 }
-console.log("----> " + socket);
+console.log("----> " + process.env.NODE_ENV);
 
 const Page = () => {
   const [codeBlock, setCodeBlock] = useState({ id: "", title: "", code: "" });
