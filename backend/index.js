@@ -14,9 +14,9 @@ app.use(cors());
 
 app.use("/api/codeblocks/", codeBlocksRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server listening at http://localhost:${PORT}`);
+// });
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
