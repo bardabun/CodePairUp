@@ -1,0 +1,7 @@
+name: backend
+env: {}
+buildScript: echo "No build step required"
+startScript: node index.js
+routes:
+  - src: /(.*)
+    dest: index.js

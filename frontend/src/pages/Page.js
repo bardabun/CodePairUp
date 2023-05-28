@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 
 import "./page.css";
 
+// Connect to the Socket.IO server
 const serverURL =
   process.env.NODE_ENV === "production"
     ? "https://code-pair-up-server.vercel.app"
