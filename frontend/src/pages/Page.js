@@ -5,12 +5,10 @@ import { io } from "socket.io-client";
 
 import "./page.css";
 
-console.log(
-  "This is the RAILWAY_ENVIRONMENT: " + process.env.RAILWAY_ENVIRONMENT
-);
+console.log("This is the NODE_ENV: " + process.env.NODE_ENV);
 // Connect to the Socket.IO server
 const serverURL =
-  process.env.RAILWAY_ENVIRONMENT === "production"
+  process.env.NODE_ENV === "development"
     ? "https://code-pair-up-server.vercel.app"
     : "http://localhost:5000";
 
