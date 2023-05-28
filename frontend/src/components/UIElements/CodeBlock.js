@@ -6,7 +6,9 @@ import { faCopy, faClipboard } from "@fortawesome/free-solid-svg-icons";
 
 import "./CodeBlock.css";
 
+// Component for displaying a code block with a Monaco Editor
 const CodeBlock = (props) => {
+  // State variables
   const [isCopied, setIsCopied] = useState(true);
   const [editableCode, setEditableCode] = useState(props.code);
 
@@ -14,11 +16,13 @@ const CodeBlock = (props) => {
     setIsCopied((prevState) => !prevState);
   };
 
+  // Update the editable code when the code prop changes
   useEffect(() => {
     setEditableCode(props.code);
   }, [props.code]);
 
-  const handleEditorChange = (value, event) => {
+  // Handle editor value change
+  const handleEditorChange = (value) => {
     setEditableCode(value);
     props.onChange(value);
   };

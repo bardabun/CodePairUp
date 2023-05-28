@@ -12,25 +12,13 @@ const serverURL =
     ? "https://codepairup-server.up.railway.app"
     : "http://localhost:5000";
 
-// // Connect to the Socket.IO server
-// let socket;
-// if (process.env.NODE_ENV === "production") {
-//   // Use the remote server address for production environment
-//   console.log(process.env.NODE_ENV + " mode");
-//   socket = io("https://code-pair-up-server.vercel.app", {
-//     autoConnect: false,
-//   });
-// } else {
-//   // Use the local machine address for development environment
-//   console.log("not production mode");
-//   socket = io("http://localhost:5000", { autoConnect: false });
-// }
-
 const socket = io(serverURL, {
   autoConnect: false,
 });
 
+// Main component for the page
 const Page = () => {
+  // State variables
   const [codeBlock, setCodeBlock] = useState({ id: "", title: "", code: "" });
   const [role, setRole] = useState(null);
   const [typedCode, setTypedCode] = useState("");
@@ -38,8 +26,10 @@ const Page = () => {
   const [showTryAgain, setShowTryAgain] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Extracting parameters from the URL
   let params = useParams();
 
+  // Functions to open/close the solution popup
   const openPopup = () => {
     setIsOpen(true);
   };
@@ -48,12 +38,9 @@ const Page = () => {
     setIsOpen(false);
   };
 
+  // Fetch the codeBlock data from the server
   useEffect(() => {
-    // Fetch the codeBlock data from the server
-    // fetch("https://bardabun-server.vercel.app/api/product") //const res = await fetch(SERVER_URL + "/api/product");
     fetch(`${serverURL}/api/codeblocks/${params.aid}`)
-      // fetch(`https://code-pair-up-client.vercel.app/api/codeblocks/${params.aid}`)
-      // fetch(`http://localhost:5000/api/codeblocks/${params.aid}`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.codeBlock) {
@@ -68,8 +55,8 @@ const Page = () => {
       });
   }, [params.aid]);
 
+  // Connect to the Socket.IO server and handle socket events
   useEffect(() => {
-    // Listen for code updates from the server
     socket.on("codeUpdated", (updatedCode) => {
       setCodeBlock((prevCodeBlock) => ({
         ...prevCodeBlock,
@@ -93,32 +80,28 @@ const Page = () => {
       socket.off("userRole");
     };
   }, [role]);
-
+  // Handle code change by the editor and emit the code update event
   const handleCodeChange = (newCode) => {
     if (role === "editor") {
-      console.log(role);
-      // Emit the code update event to the server
       socket.emit("codeUpdate", newCode);
       setTypedCode(newCode);
     }
   };
-
+  // Handle code submission and compare with the solution
   const handleCodeSolution = () => {
-    const solutionCode = codeBlock.solution; // Assuming the solution is stored in the 'solution' key of the codeBlock object
+    const solutionCode = codeBlock.solution;
 
     if (typedCode === solutionCode) {
-      // Code matches the solution
       console.log("Code is correct!");
       setShowSmile(true);
       setTimeout(() => {
         setShowSmile(false); // Hide the smile after a delay
       }, 3000);
     } else {
-      // Code does not match the solution
       console.log("Code is incorrect!");
       setShowTryAgain(true);
       setTimeout(() => {
-        setShowTryAgain(false); // Hide the try again after a delay
+        setShowTryAgain(false);
       }, 3000);
     }
   };
@@ -141,11 +124,7 @@ const Page = () => {
         </button>
         {isOpen && (
           <div className="popup-overlay overlay">
-            <CodeBlock
-              isDisabled={true}
-              code={codeBlock.solution}
-              // onChange={handleCodeChange}
-            />
+            <CodeBlock isDisabled={true} code={codeBlock.solution} />
             <button className="button--submit" onClick={closePopup}>
               Close
             </button>
