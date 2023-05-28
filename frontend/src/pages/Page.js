@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 
 import "./page.css";
 
+console.log("This is the ENV_NODE: " + process.env.NODE_ENV);
 // Connect to the Socket.IO server
 const serverURL =
   process.env.NODE_ENV === "production"
