@@ -54,7 +54,9 @@ mongoose
       },
     });
 
+    const connectedUsers = {};
     let isFirstUserConnected = false;
+    let userRole;
 
     io.on("connection", (socket) => {
       console.log("Client Connected");
@@ -62,9 +64,13 @@ mongoose
       if (!isFirstUserConnected) {
         socket.emit("userRole", "viewer"); // Emit "viewer" role to the first user
         isFirstUserConnected = true; // Mark the first user as connected
+        userRole = "viewer";
       } else {
         socket.emit("userRole", "editor"); // Emit "editor" role to subsequent users
+        userRole = "editor";
       }
+
+      connectedUsers[socket.id] = userRole; // Store the user role
 
       // Listen for code updates from clients
       socket.on("codeUpdate", (updatedCode) => {
@@ -77,10 +83,13 @@ mongoose
 
       // Handle socket disconnection
       socket.on("disconnect", () => {
-        if (isFirstUserConnected) {
+        const disconnectedUserRole = connectedUsers[socket.id]; // Get the role of the disconnected user
+        delete connectedUsers[socket.id]; // Remove the disconnected user from the data structure
+
+        if (isFirstUserConnected && disconnectedUserRole === "viewer") {
           isFirstUserConnected = false; // Reset isFirstUserConnected when the first user disconnects
         }
-        console.log("Client Disconnected");
+        console.log("Client Disconnected " + disconnectedUserRole);
       });
     });
   })

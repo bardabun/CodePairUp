@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 
 import "./page.css";
 
-console.log("This is the NODE_ENV: " + process.env.NODE_ENV);
+console.log("This is the NODE_ENV: xxxx" + process.env.NODE_ENV);
 // Connect to the Socket.IO server
 const serverURL =
   process.env.NODE_ENV === "development"
@@ -80,6 +80,17 @@ const Page = () => {
       socket.off("userRole");
     };
   }, [role]);
+
+  useEffect(() => {
+    // Cleanup function to disconnect the user
+    const disconnectUser = () => {
+      socket.disconnect();
+    };
+
+    // Call the disconnectUser function when the component unmounts
+    return disconnectUser;
+  }, []);
+
   // Handle code change by the editor and emit the code update event
   const handleCodeChange = (newCode) => {
     if (role === "editor") {
