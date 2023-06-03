@@ -8,7 +8,7 @@ import "./page.css";
 console.log("This is the NODE_ENV: " + process.env.NODE_ENV);
 // Connect to the Socket.IO server
 const serverURL =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === "development"
     ? "https://codepairup-server.up.railway.app"
     : "http://localhost:5000";
 
