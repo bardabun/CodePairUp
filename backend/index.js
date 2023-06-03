@@ -28,13 +28,10 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://bardabun:Bar0546651680@cluster0.trhsimw.mongodb.net/blocks?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     const server = app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
