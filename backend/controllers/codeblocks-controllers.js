@@ -6,7 +6,7 @@ const getCodeBlockById = (req, res, next) => {
   const codeBlockId = req.params.aid;
   CodeBlockModel.findOne({ id: codeBlockId })
     .then((codeBlock) => {
-      // If code block is not found, throw an HTTP error
+      // If code block is not found, throw an HTTP error.
       if (!codeBlock) {
         throw new HttpError(
           "Could not find a codeBlock for the provided id-> " + codeBlockId,
