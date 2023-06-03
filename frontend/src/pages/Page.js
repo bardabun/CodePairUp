@@ -26,6 +26,7 @@ const Page = () => {
   const [showTryAgain, setShowTryAgain] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const isEditor = role === "editor";
   // Extracting parameters from the URL
   let params = useParams();
 
@@ -65,7 +66,7 @@ const Page = () => {
     });
 
     socket.on("userRole", (roleFromServer) => {
-      if (role === "viewer" || roleFromServer === "viewer") {
+      if (!isEditor || roleFromServer === "viewer") {
         setRole("viewer");
       } else if (roleFromServer === "editor") {
         setRole("editor");
@@ -79,21 +80,14 @@ const Page = () => {
       socket.off("codeUpdated");
       socket.off("userRole");
     };
-  }, [role]);
+  }, [isEditor]);
 
-  useEffect(() => {
-    // Cleanup function to disconnect the user
-    const disconnectUser = () => {
-      socket.disconnect();
-    };
-
-    // Call the disconnectUser function when the component unmounts
-    return disconnectUser;
-  }, []);
+  // Call the disconnect function when the component unmounts
+  useEffect(() => socket.disconnect, []);
 
   // Handle code change by the editor and emit the code update event
   const handleCodeChange = (newCode) => {
-    if (role === "editor") {
+    if (isEditor) {
       socket.emit("codeUpdate", newCode);
       setTypedCode(newCode);
     }
@@ -120,12 +114,12 @@ const Page = () => {
     <div>
       <h1 className="header--codeblock"> {codeBlock.title}</h1>
       <CodeBlock
-        isDisabled={role === "viewer"}
+        isDisabled={!isEditor}
         code={codeBlock.code}
         onChange={handleCodeChange}
       />
       <div className="buttons--container">
-        {role === "editor" && (
+        {isEditor && (
           <button className="button--submit" onClick={handleCodeSolution}>
             Submit
           </button>
