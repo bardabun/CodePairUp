@@ -82,7 +82,15 @@ const Page = () => {
   }, [role]);
 
   // Call the disconnect function when the component unmounts
-  useEffect(() => socket.disconnect, []);
+  useEffect(() => {
+    // Cleanup function to disconnect the user
+    const disconnectUser = () => {
+      socket.disconnect();
+    };
+
+    // Call the disconnectUser function with parameters when the component unmounts
+    return () => disconnectUser();
+  }, []);
 
   // Handle code change by the editor and emit the code update event
   const handleCodeChange = (newCode) => {
