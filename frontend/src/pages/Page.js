@@ -10,10 +10,6 @@ console.log(
 );
 // Connect to the Socket.IO server
 const serverURL = process.env.REACT_APP_SERVER_URL;
-// const serverURL =
-//   process.env.NODE_ENV === "development"
-//     ? "https://codepairup-server.up.railway.app"
-//     : "http://localhost:5000";
 
 const socket = io(serverURL, {
   autoConnect: false,
