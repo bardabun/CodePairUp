@@ -5,12 +5,15 @@ import { io } from "socket.io-client";
 
 import "./page.css";
 
-console.log("This is the NODE_ENV: " + process.env.NODE_ENV);
+console.log(
+  "This is the REACT_APP_SERVER_URL: " + process.env.REACT_APP_SERVER_URL
+);
 // Connect to the Socket.IO server
-const serverURL =
-  process.env.NODE_ENV === "development"
-    ? "https://codepairup-server.up.railway.app"
-    : "http://localhost:5000";
+const serverURL = process.env.REACT_APP_SERVER_URL;
+// const serverURL =
+//   process.env.NODE_ENV === "development"
+//     ? "https://codepairup-server.up.railway.app"
+//     : "http://localhost:5000";
 
 const socket = io(serverURL, {
   autoConnect: false,
