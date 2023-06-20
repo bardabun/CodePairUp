@@ -46,7 +46,7 @@ const Page = () => {
           // Set the codeBlock data in the state
           setCodeBlock(data.codeBlock);
         } else {
-          console.log("Couldn't find the article");
+          console.log("Couldn't find the codeblock");
         }
       })
       .catch((error) => {
