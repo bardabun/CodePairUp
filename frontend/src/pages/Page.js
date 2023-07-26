@@ -37,7 +37,7 @@ const Page = () => {
     setIsOpen(false);
   };
 
-  // Fetch the codeBlock data from the server
+  // Fetch the codeBlock data from the server.
   useEffect(() => {
     fetch(`${serverURL}/api/codeblocks/${params.aid}`)
       .then((response) => response.json())
